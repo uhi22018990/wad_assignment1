@@ -166,7 +166,7 @@ const data = {
 			}]
 		},
 		"questions": {
-            "title": "Balances",
+			"title": "Balances",
 			"fullquestion": {
 				"question": "Three balances are supported on rigid pivots and connected by two flexible light strings as shown in the diagram above. Note that the centre balance operates upside down compared to the other two. What value of mass X will enable the system to balance?",
 				"answer": [{
