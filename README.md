@@ -4,7 +4,7 @@ Author: 22018990
 Date: 2023-03-11
 
 ## Introduction
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in RFC 2119.
+_The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in RFC 2119._
 
 Project is based on nodejs.
 To run the test execute the command:
@@ -13,7 +13,24 @@ To run the test execute the command:
 npm run test
 ```
 
-The test prepared aims to check the correct format response for the website https://i-want-to-study-engineering.org.
+I have created two distinct files with relative test suite:
+
+* data.js
+* answer.js
+
+The first aims to test the correctness of the returned JSON response, the second contains answer-related functions like `is_correct` which given data checks whenevers the user's answer(s) is(are) correct(s).
+
+The title of all the tests are descriptive on what the test is checking.
+Some tests like `TC12 check that there is only 1 correct answer if answertype is radio or more if checkbox` are corollary of logic observations about the scope of the website.
+
+### The test suites
+All the tests inside each suite have been enumerated with the prefix TC (Test Case) and a progressive number.
+This is a personal practice which help me to identify and the search on the source code in case of debug.
+
+
+## data.js
+
+The test(suite) prepared aims to check the correct format response for the website https://i-want-to-study-engineering.org.
 The response has been provided by the tutor trough the link https://github.com/1122131uhi/WAD1122131/blob/main/balances.json .
 
 However, while studying the provided response and the website I have found that those responses differ between them. 
@@ -27,15 +44,9 @@ Before start the test the website has been analysed in order to find variations 
 * a question MAY have answers expressed as images  ![](answer_as_image.png)
 
 I have not check all the answers in the websites, however, by looking the response provided the `"answertype": "radio",` suggests that a question MAY have multiple responses.
+With this is mind the `answer.js` function will cope with _radio_ and _checkbox_ type of answer.
 
-All the tests have been enumerated with the prefix TC (Test Case) and a progressive number.
-This is a personal practice which help the identification and the search on the source code in case of debug.
-
-
-## Test strategy
-The main strategy of the test is to check that an object has all the requested properties.
-Moreover, the type of these properties has been checked.
-Both strategies aim to verify the consistency of the response.   
+The main strategy of the test is to check that an object has all the requested properties of the exact type.
 By looking the response we can see that there is a property `balances`
 
 ```
@@ -75,6 +86,26 @@ By looking the response we can see that there is a property `balances`
 All the tests have been based on the `balances` property.
 This because the other elements `gravity_s`, `spec_mom_s`, `spec_gravity_s`, `spec_strat_balan_s`, `problem_s` seems to be related to other parts of the websites.
 
-The title of all the tests are descriptive on what the test is checking.
-Some tests like `TC12 check that there is only 1 correct answer if answertype is radio or more if checkbox` are corollary of logic observations about the scope of the website.
+## answer.js
+It contains only one function `is_correct` which has this signature:
 
+```
+/**
+ * Given and oject data a question name and user_
+ * 
+ * @param {object} data 
+ * @param {string} question_name 
+ * @param {array} user_answers
+ */
+function is_correct(data, question_name, numbers)
+```
+
+The function checks different cases like 
+* user_answers is an array of numbers
+* value of type strings, null etc. will be not considered
+* multiple answers in case of 'checkbox' answertype
+* multiple answers: user's answer order insensitive
+
+
+**Note: ** Despite the 'defensive programming' the function has been kept 'light' considering that user_answer array has
+been validated and filtered before to be passed to the function.
