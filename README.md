@@ -108,5 +108,5 @@ The function checks different cases like
 * `user_answers` order insensitive: supposing `[0, 3]` as correct answers the function matches `user_answers` as `[0, 3]` or `[3, 0]`
 
 
-**Note: ** Despite the 'defensive programming' the function has been kept 'light' considering that `user_answer` array has
+**Note:** Despite the 'defensive programming' the function has been kept 'light' considering that `user_answer` array has
 been validated and filtered before to be passed to the function.
