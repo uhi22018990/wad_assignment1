@@ -18,32 +18,33 @@ I have created two distinct files with relative test suite:
 * data.js
 * answer.js
 
-The first aims to test the correctness of the returned JSON response, the second contains answer-related functions like `is_correct` which given data checks whenevers the user's answer(s) is(are) correct(s).
-
-The title of all the tests are descriptive on what the test is checking.
-Some tests like `TC12 check that there is only 1 correct answer if answertype is radio or more if checkbox` are corollary of logic observations about the scope of the website.
+The first aims to test the correctness of the returned JSON response, the second contains answer-related functions like `is_correct`. 
+The function checks whenevers the user's answer(s) is(are) correct(s).
 
 ### The test suites
+All the test titles inside a test suite are descriptive on what the test is checking.
+Some tests like `TC12 check that there is only 1 correct answer if answertype is radio or more if checkbox` are corollary of logic observations about the scope of the website.
+
 All the tests inside each suite have been enumerated with the prefix TC (Test Case) and a progressive number.
 This is a personal practice which help me to identify and the search on the source code in case of debug.
 
-
 ## data.js
 
-The test(suite) prepared aims to check the correct format response for the website https://i-want-to-study-engineering.org.
-The response has been provided by the tutor trough the link https://github.com/1122131uhi/WAD1122131/blob/main/balances.json .
+The test suite prepared aims to check the correct format response for the website https://i-want-to-study-engineering.org.
+The response has been provided by the tutor through the link https://github.com/1122131uhi/WAD1122131/blob/main/balances.json .
 
 However, while studying the provided response and the website I have found that those responses differ between them. 
 It is very likely that the website has been updated while the module has been prepared.
 The actual response for the "balances problem" is visible on `balances_actual.txt` in this repository.
 
-Before start the test the website has been analysed in order to find variations between different questions. By looking some of the questions I have deducted the following points:
+Before start the test the website has been analysed in order to find variations between different questions. 
+By looking some of the questions I have deducted the following points:
 
 * a question MUST have a text
 * a question MAY have an image. Below a question without image.
 * a question MAY have answers expressed as images  ![](answer_as_image.png)
 
-I have not check all the answers in the websites, however, by looking the response provided the `"answertype": "radio",` suggests that a question MAY have multiple responses.
+I have not check all the answers in the websites, however, by looking the response provided by the tutor, the `"answertype": "radio",` suggests that a question MAY have multiple responses.
 With this is mind the `answer.js` function will cope with _radio_ and _checkbox_ type of answer.
 
 The main strategy of the test is to check that an object has all the requested properties of the exact type.
@@ -101,11 +102,11 @@ function is_correct(data, question_name, numbers)
 ```
 
 The function checks different cases like 
-* user_answers is an array of numbers
-* value of type strings, null etc. will be not considered
+* `user_answers` is an array of numbers which are the indexes of the answers available on `data` that the user considers as correct answer 
+* `user_answers` values of type strings, null etc. will be not considered
 * multiple answers in case of 'checkbox' answertype
-* multiple answers: user's answer order insensitive
+* `user_answers` order insensitive: supposing `[0, 3]` as correct answers the function matches `user_answers` as `[0, 3]` or `[3, 0]`
 
 
-**Note: ** Despite the 'defensive programming' the function has been kept 'light' considering that user_answer array has
+**Note: ** Despite the 'defensive programming' the function has been kept 'light' considering that `user_answer` array has
 been validated and filtered before to be passed to the function.
